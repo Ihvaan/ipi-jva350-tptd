@@ -186,6 +186,35 @@ public class SalarieAideADomicile {
     }
     */
 
+    public double getCongesPayesRestantAnneeN() {
+        return this.congesPayesAcquisAnneeN - this.getCongesPayesPrisAnneeN();
+    }
+
+    public double getCongesPayesPrisAnneeN() {
+        return this.congesPayesPris.stream()
+                .filter(date -> date.getYear() == LocalDate.now().getYear())
+                .count();
+    }
+
+    public boolean aConsommeTousSesJoursDeConges() {
+        return this.getCongesPayesRestantAnneeN() <= 0;
+    }
+
+    public boolean aConsommeTousSesJoursDeCongesAnneePrecedente() {
+        return this.getCongesPayesRestantAnneeNMoins1() <= 0;
+    }
+
+    public boolean aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle() {
+        return this.aConsommeTousSesJoursDeCongesAnneePrecedente() && this.aConsommeTousSesJoursDeConges();
+    }
+
+    public boolean aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlResteDesJours() {
+        return this.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle() && this.getCongesPayesRestantAnneeN() > 0;
+    }
+
+    public boolean aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlNeRestePlusDeJours() {
+        return this.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle() && this.getCongesPayesRestantAnneeN() <= 0;
+    }
     public double getCongesPayesAcquisAnneeNMoins1() {
         return congesPayesAcquisAnneeNMoins1;
     }
@@ -231,5 +260,8 @@ public class SalarieAideADomicile {
     @Override
     public int hashCode() {
         return Objects.hash(id, nom);
+    }
+
+    public void ajouteConge(LocalDate now, LocalDate localDate) {
     }
 }

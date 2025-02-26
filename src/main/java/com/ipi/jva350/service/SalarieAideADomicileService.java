@@ -20,7 +20,7 @@ public class SalarieAideADomicileService {
     @Autowired
     private SalarieAideADomicileRepository salarieAideADomicileRepository;
 
-    public SalarieAideADomicileService() {
+    public SalarieAideADomicileService(SalarieAideADomicileRepository repository) {
     }
 
     /**
