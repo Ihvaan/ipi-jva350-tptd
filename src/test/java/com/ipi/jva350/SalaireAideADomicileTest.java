@@ -161,13 +161,13 @@ class SalaireAideADomicileTest {
         salarie.setJoursTravaillesAnneeNMoins1(10);
         salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(10));
         salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(5));
-        assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlResteDesJours(), "Le salarié n'a pas consommé tous ses jours de congés de l'année précédente et actuelle et il reste des jours");
+        assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlResteDesJours(), "Le salarié n'a pas consommé tous ses jours de congés de l'année précédente et actuelle");
 
         salarie.setJoursTravaillesAnneeN(15);
         salarie.setJoursTravaillesAnneeNMoins1(10);
         salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(10));
         salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(10));
-        assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlResteDesJours(), "Le salarié n'a pas consommé tous ses jours de congés de l'année précédente et actuelle et il reste des jours");
+        assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlResteDesJours(), "Le salarié n'a pas consommé tous ses jours de congés de l'année précédente et actuelle");
     }
 
     @Test
@@ -214,5 +214,3 @@ class SalaireAideADomicileTest {
         assertEquals(expectedDays, actualDays);
     }
 }
-
-
