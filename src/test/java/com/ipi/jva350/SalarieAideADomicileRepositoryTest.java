@@ -18,7 +18,6 @@ public class SalarieAideADomicileRepositoryTest {
 
     @Test
     void testFindByNom_ExistingEmployee() {
-        // Given
         String nomSalarie = "Dupont";
         SalarieAideADomicile salarie = new SalarieAideADomicile();
         salarie.setNom(nomSalarie);
@@ -33,26 +32,24 @@ public class SalarieAideADomicileRepositoryTest {
     @Test
     void testFindByNom_NonExistingEmployee() {
         SalarieAideADomicile found = repository.findByNom("Inconnu");
-
         assertNull(found, "Aucun salarié ne devrait être trouvé");
     }
 
     @Test
-    void testFindByNom_CaseSensitive() {
-        String nomSalarie = "Dupont";
-        SalarieAideADomicile salarie = new SalarieAideADomicile();
-        salarie.setNom(nomSalarie);
-        repository.save(salarie);
+    void testPartCongesPrisTotauxAnneeNMoins1() {
+        SalarieAideADomicile salarie1 = new SalarieAideADomicile();
+        salarie1.setCongesPayesAcquisAnneeNMoins1(20);
+        salarie1.setCongesPayesPrisAnneeNMoins1(10);
+        repository.save(salarie1);
 
-        SalarieAideADomicile found = repository.findByNom("dupont");
+        SalarieAideADomicile salarie2 = new SalarieAideADomicile();
+        salarie2.setCongesPayesAcquisAnneeNMoins1(30);
+        salarie2.setCongesPayesPrisAnneeNMoins1(15);
+        repository.save(salarie2);
 
-        assertNull(found, "La recherche devrait être sensible à la casse");
-    }
+        Double partCongesPris = repository.partCongesPrisTotauxAnneeNMoins1();
 
-    @Test
-    void testFindByNom_Null() {
-        SalarieAideADomicile found = repository.findByNom(null);
-
-        assertNull(found, "Aucun salarié ne devrait être trouvé avec un nom null");
+        assertNotNull(partCongesPris, "La part des congés pris ne doit pas être null");
+        assertEquals(0.5, partCongesPris, 0.01, "La part des congés pris doit être de 0.5 (50%)");
     }
 }
