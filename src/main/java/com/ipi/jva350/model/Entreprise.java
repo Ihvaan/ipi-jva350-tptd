@@ -39,31 +39,30 @@ public final class Entreprise {
     }
 
 
-    public static List<LocalDate> joursFeries(LocalDate now){
+    public static List<LocalDate> joursFeries(LocalDate date) {
+        if (date == null) {
+            throw new IllegalArgumentException("La date ne peut pas être null");
+        }
+
+        int annee = date.getYear();
+        LocalDate datePaquesAnnee = datePaque.get(annee);
+
+        if (datePaquesAnnee == null) {
+            throw new IllegalStateException("La date de Pâques n'est pas définie pour l'année " + annee);
+        }
 
         return Arrays.asList(
-                // 1er janvier	Jour de l’an
-                LocalDate.of(now.getYear(), 1,1),
-                // Lendemain du dimanche de Pâques.	Lundi de Pâques
-                datePaque.get(now.getYear()).plusDays(1L),
-                // 1er mai	Fête du Travail
-                LocalDate.of(now.getYear(), 5,1),
-                // 8 mai Fête de la Victoire
-                LocalDate.of(now.getYear(), 5,8),
-                // Jeudi 40 jours après Pâques Ascension Fête chrétienne célébrant la montée de Jésus aux cieux.
-                datePaque.get(now.getYear()).plusDays(40L),
-                // Le lundi suivant le dimanche de Pentecôte (le septième après Pâques).
-                datePaque.get(now.getYear()).plusDays(50L),
-                // 14 juillet Fête nationale
-                LocalDate.of(now.getYear(), 7,14),
-                // 15 août Assomption
-                LocalDate.of(now.getYear(), 8,15),
-                // 1er novembre	Toussaint Fête de tous les saints de l’Église catholique.
-                LocalDate.of(now.getYear(), 11,1),
-                // 11 novembre Armistice de 1918
-                LocalDate.of(now.getYear(), 11,11),
-                // 25 décembre Noël
-                LocalDate.of(now.getYear(), 12,25)
+                LocalDate.of(annee, 1, 1),            // Jour de l'an
+                datePaquesAnnee.plusDays(1),          // Lundi de Pâques
+                LocalDate.of(annee, 5, 1),            // Fête du Travail
+                LocalDate.of(annee, 5, 8),            // Victoire 1945
+                datePaquesAnnee.plusDays(39),         // Ascension (39 jours après Pâques)
+                datePaquesAnnee.plusDays(49).plusDays(1),        // Lundi de Pentecôte
+                LocalDate.of(annee, 7, 14),           // Fête nationale
+                LocalDate.of(annee, 8, 15),           // Assomption
+                LocalDate.of(annee, 11, 1),           // Toussaint
+                LocalDate.of(annee, 11, 11),          // Armistice 1918
+                LocalDate.of(annee, 12, 25)           // Noël
 
         );
     }
@@ -130,13 +129,12 @@ public final class Entreprise {
     }
 
     public static boolean estJourFerie(LocalDate jour) {
-        int monEntier = (int) Entreprise.joursFeries(jour).stream().filter(d ->
-                d.equals(jour)).count();
-        int test = bissextile(jour.getYear()) ? 1 : 0;
-        if (test != 0 && !(monEntier > 1)) {
-            test--;
+        if (jour == null) {
+            throw new IllegalArgumentException("La date ne peut pas être null");
         }
-        return monEntier != test;
+
+        return joursFeries(jour).stream()
+                .anyMatch(dateFeriee -> dateFeriee.equals(jour));
     }
 
     /**
@@ -148,7 +146,12 @@ public final class Entreprise {
      */
     public static boolean estDansPlage(LocalDate d, LocalDate debut, LocalDate fin) {
         // à implémenter en TDD !
-        throw new RuntimeException("à implémenter en TDD !");
+        if (d == null || debut == null || fin == null) {
+            throw new IllegalArgumentException("Les dates ne peuvent pas être null");
+        }
+        if (fin.isBefore(debut)) {
+            throw new IllegalArgumentException("La date de fin ne peut pas être avant la date de début");
+        }
+        return !d.isBefore(debut) && !d.isAfter(fin);
     }
-
 }

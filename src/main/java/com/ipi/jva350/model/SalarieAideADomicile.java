@@ -246,7 +246,7 @@ public class SalarieAideADomicile {
     public void setMoisDebutContrat(LocalDate moisDebutContrat) {
         this.moisDebutContrat = moisDebutContrat;
     }
-    
+
 
     @Override
     public boolean equals(Object o) {
@@ -262,7 +262,10 @@ public class SalarieAideADomicile {
         return Objects.hash(id, nom);
     }
 
-    public void ajouteConge(LocalDate now, LocalDate localDate) {
+
+
+    public void ajouteConge(LocalDate start, LocalDate end) {
+        this.congesPayesPris.addAll(calculeJoursDeCongeDecomptesPourPlage(start, end));
     }
 
     public void setCongesPayesPrisAnneeN(int i) {
