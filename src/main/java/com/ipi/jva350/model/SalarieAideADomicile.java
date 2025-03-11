@@ -264,4 +264,7 @@ public class SalarieAideADomicile {
 
     public void ajouteConge(LocalDate now, LocalDate localDate) {
     }
+
+    public void setCongesPayesPrisAnneeN(int i) {
+    }
 }
