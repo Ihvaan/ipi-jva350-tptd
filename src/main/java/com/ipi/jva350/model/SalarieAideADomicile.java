@@ -72,7 +72,7 @@ public class SalarieAideADomicile {
      * @return
      */
     public boolean aLegalementDroitADesCongesPayes() {
-        return this.getJoursTravaillesAnneeNMoins1() > 10;
+        return joursTravaillesAnneeN >= 10 || joursTravaillesAnneeNMoins1 >= 10;
     }
 
     /**
@@ -205,7 +205,7 @@ public class SalarieAideADomicile {
     }
 
     public boolean aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle() {
-        return this.aConsommeTousSesJoursDeCongesAnneePrecedente() && this.aConsommeTousSesJoursDeConges();
+        return getCongesPayesRestantAnneeN() == 0 && getCongesPayesRestantAnneeNMoins1() == 0;
     }
 
     public boolean aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlResteDesJours() {
@@ -261,8 +261,6 @@ public class SalarieAideADomicile {
     public int hashCode() {
         return Objects.hash(id, nom);
     }
-
-
 
     public void ajouteConge(LocalDate start, LocalDate end) {
         this.congesPayesPris.addAll(calculeJoursDeCongeDecomptesPourPlage(start, end));

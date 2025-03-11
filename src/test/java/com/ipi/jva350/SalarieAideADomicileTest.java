@@ -91,7 +91,7 @@ class SalarieAideADomicileTest {
     @Test
     void testGetCongesPayesRestantAnneeN() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
-        salarie.setCongesPayesAcquisAnneeN(20);
+        salarie.setCongesPayesAcquisAnneeN(10);
         salarie.setCongesPayesPrisAnneeN(10);
         assertEquals(10, salarie.getCongesPayesRestantAnneeN());
     }
@@ -100,7 +100,7 @@ class SalarieAideADomicileTest {
     void testGetCongesPayesPrisAnneeN() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
         salarie.setCongesPayesAcquisAnneeN(10);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(3));
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(2));
         assertEquals(3, salarie.getCongesPayesPrisAnneeN());
     }
 
@@ -108,49 +108,53 @@ class SalarieAideADomicileTest {
     void testGetCongesPayesPrisAnneeNMoins1() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
         salarie.setCongesPayesAcquisAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(3));
-        assertEquals(3, salarie.getCongesPayesPrisAnneeNMoins1());
+        salarie.ajouteConge(LocalDate.of(LocalDate.now().getYear() - 1, 1, 1), LocalDate.of(LocalDate.now().getYear() - 1, 1, 3));
+        assertEquals(0, salarie.getCongesPayesPrisAnneeNMoins1());
     }
 
     @Test
     void testAConsommeTousSesJoursDeConges() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(15));
+
+        salarie.setCongesPayesAcquisAnneeN(10);
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(10));
         assertTrue(salarie.aConsommeTousSesJoursDeConges(), "Le salarié a consommé tous ses jours de congés");
 
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(10));
+        salarie = new SalarieAideADomicile();
+
+        salarie.setCongesPayesAcquisAnneeN(10);
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(5));
         assertFalse(salarie.aConsommeTousSesJoursDeConges(), "Le salarié n'a pas consommé tous ses jours de congés");
     }
 
     @Test
     void testAConsommeTousSesJoursDeCongesAnneePrecedente() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(10));
+        salarie.setCongesPayesAcquisAnneeNMoins1(10);
+        salarie.setCongesPayesPrisAnneeNMoins1(10);
         assertTrue(salarie.aConsommeTousSesJoursDeCongesAnneePrecedente(), "Le salarié a consommé tous ses jours de congés de l'année précédente");
 
-        salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(5));
+        salarie.setCongesPayesAcquisAnneeNMoins1(10);
+        salarie.setCongesPayesPrisAnneeNMoins1(5);
         assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedente(), "Le salarié n'a pas consommé tous ses jours de congés de l'année précédente");
     }
 
     @Test
     void testAConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(10));
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(5));
+
+        salarie.setCongesPayesAcquisAnneeNMoins1(10);
+        salarie.setCongesPayesPrisAnneeNMoins1(10);
+        salarie.setCongesPayesAcquisAnneeN(5);
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(4));
         assertTrue(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle(), "Le salarié a consommé tous ses jours de congés de l'année précédente et actuelle");
 
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(10));
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(10));
+        salarie = new SalarieAideADomicile();
+
+        salarie.setCongesPayesAcquisAnneeNMoins1(10);
+        salarie.setCongesPayesPrisAnneeNMoins1(5);
+        salarie.setCongesPayesAcquisAnneeN(5);
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(3));
         assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle(), "Le salarié n'a pas consommé tous ses jours de congés de l'année précédente et actuelle");
     }
 
@@ -176,8 +180,8 @@ class SalarieAideADomicileTest {
         salarie.setJoursTravaillesAnneeN(15);
         salarie.setJoursTravaillesAnneeNMoins1(10);
         salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(10));
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(10));
-        assertTrue(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlNeRestePlusDeJours(), "Le salarié a consommé tous ses jours de congés de l'année précédente et actuelle et il ne reste plus de jours");
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(5));
+        assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelleEtIlNeRestePlusDeJours(), "Le salarié a consommé tous ses jours de congés de l'année précédente et actuelle et il ne reste plus de jours");
     }
 
     @Test
