@@ -115,26 +115,26 @@ class SalarieAideADomicileTest {
     @Test
     void testAConsommeTousSesJoursDeConges() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(15));
+
+        salarie.setCongesPayesAcquisAnneeN(15);
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(14));
         assertTrue(salarie.aConsommeTousSesJoursDeConges(), "Le salarié a consommé tous ses jours de congés");
 
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(10));
+        salarie = new SalarieAideADomicile();
+        salarie.setCongesPayesAcquisAnneeN(15);
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(9));
         assertFalse(salarie.aConsommeTousSesJoursDeConges(), "Le salarié n'a pas consommé tous ses jours de congés");
     }
 
     @Test
     void testAConsommeTousSesJoursDeCongesAnneePrecedente() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
-        salarie.setJoursTravaillesAnneeN(15);
-        salarie.setJoursTravaillesAnneeNMoins1(10);
-        salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(10));
+        salarie.setCongesPayesAcquisAnneeNMoins1(10);
+        salarie.setCongesPayesPrisAnneeNMoins1(10);
         assertTrue(salarie.aConsommeTousSesJoursDeCongesAnneePrecedente(), "Le salarié a consommé tous ses jours de congés de l'année précédente");
 
-        salarie.ajouteConge(LocalDate.now().minusYears(1), LocalDate.now().minusYears(1).plusDays(5));
+        salarie.setCongesPayesAcquisAnneeNMoins1(10);
+        salarie.setCongesPayesPrisAnneeNMoins1(5);
         assertFalse(salarie.aConsommeTousSesJoursDeCongesAnneePrecedente(), "Le salarié n'a pas consommé tous ses jours de congés de l'année précédente");
     }
 
