@@ -52,17 +52,17 @@ public final class Entreprise {
         }
 
         return Arrays.asList(
-                LocalDate.of(annee, 1, 1),            // Jour de l'an
-                datePaquesAnnee.plusDays(1),          // Lundi de Pâques
-                LocalDate.of(annee, 5, 1),            // Fête du Travail
-                LocalDate.of(annee, 5, 8),            // Victoire 1945
-                datePaquesAnnee.plusDays(39),         // Ascension (39 jours après Pâques)
-                datePaquesAnnee.plusDays(49).plusDays(1),        // Lundi de Pentecôte
-                LocalDate.of(annee, 7, 14),           // Fête nationale
-                LocalDate.of(annee, 8, 15),           // Assomption
-                LocalDate.of(annee, 11, 1),           // Toussaint
-                LocalDate.of(annee, 11, 11),          // Armistice 1918
-                LocalDate.of(annee, 12, 25)           // Noël
+                LocalDate.of(annee, 1, 1),
+                datePaquesAnnee.plusDays(1),
+                LocalDate.of(annee, 5, 1),
+                LocalDate.of(annee, 5, 8),
+                datePaquesAnnee.plusDays(39),
+                datePaquesAnnee.plusDays(49).plusDays(1),
+                LocalDate.of(annee, 7, 14),
+                LocalDate.of(annee, 8, 15),
+                LocalDate.of(annee, 11, 1),
+                LocalDate.of(annee, 11, 11),
+                LocalDate.of(annee, 12, 25)
 
         );
     }
