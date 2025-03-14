@@ -45,15 +45,15 @@ public class SalarieAideADomicileServiceTest {
     @Test
     void testAjouteConge_CasNormal() throws SalarieException {
         LocalDate dateDebut = LocalDate.now().plusDays(1);
-        LocalDate dateFin = dateDebut.plusDays(2);
-        when(repository.partCongesPrisTotauxAnneeNMoins1()).thenReturn(0.1);
+        LocalDate dateFin = dateDebut.plusDays(25);
+        when(repository.partCongesPrisTotauxAnneeNMoins1()).thenReturn(0.5);
         when(repository.save(any(SalarieAideADomicile.class))).thenReturn(salarie);
 
         service.ajouteConge(salarie, dateDebut, dateFin);
 
         verify(repository, times(1)).save(salarie);
         assertFalse(salarie.getCongesPayesPris().isEmpty());
-        assertEquals(2, salarie.getCongesPayesPris().size());
+        assertEquals(21, salarie.getCongesPayesPris().size());
     }
 
     @Test
