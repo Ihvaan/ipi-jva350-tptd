@@ -100,7 +100,7 @@ class SalarieAideADomicileTest {
     void testGetCongesPayesPrisAnneeN() {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
         salarie.setCongesPayesAcquisAnneeN(10);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(2));
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(3));
         assertEquals(3, salarie.getCongesPayesPrisAnneeN());
     }
 
@@ -117,7 +117,7 @@ class SalarieAideADomicileTest {
         SalarieAideADomicile salarie = new SalarieAideADomicile();
 
         salarie.setCongesPayesAcquisAnneeN(10);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(10));
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(11));
         assertTrue(salarie.aConsommeTousSesJoursDeConges(), "Le salarié a consommé tous ses jours de congés");
 
         salarie = new SalarieAideADomicile();
@@ -146,7 +146,7 @@ class SalarieAideADomicileTest {
         salarie.setCongesPayesAcquisAnneeNMoins1(10);
         salarie.setCongesPayesPrisAnneeNMoins1(10);
         salarie.setCongesPayesAcquisAnneeN(5);
-        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(4));
+        salarie.ajouteConge(LocalDate.now(), LocalDate.now().plusDays(5));
         assertTrue(salarie.aConsommeTousSesJoursDeCongesAnneePrecedenteEtActuelle(), "Le salarié a consommé tous ses jours de congés de l'année précédente et actuelle");
 
         salarie = new SalarieAideADomicile();

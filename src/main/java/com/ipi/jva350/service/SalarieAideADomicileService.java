@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class SalarieAideADomicileService {
 
-    private final SalarieAideADomicileRepository salarieAideADomicileRepository;
-
     @Autowired
-    public SalarieAideADomicileService(SalarieAideADomicileRepository salarieAideADomicileRepository) {
-        this.salarieAideADomicileRepository = salarieAideADomicileRepository;
+    private SalarieAideADomicileRepository salarieAideADomicileRepository;
+
+    public SalarieAideADomicileService(SalarieAideADomicileRepository repository) {
+        this.salarieAideADomicileRepository = repository;
     }
 
     /**
